@@ -48,6 +48,10 @@
       <HintPath>packages\MahApps.Metro.1.1.3-ALPHA197\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />
@@ -106,6 +110,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -138,6 +148,10 @@
     <ProjectReference Include="..\PATK.Domain\PATK.Domain.csproj">
       <Project>{24ac1457-3171-457e-9304-64390aadfd45}</Project>
       <Name>PATK.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PATK.Logging\PATK.Logging.csproj">
+      <Project>{544c01a9-89b8-4a8e-b85c-09d0ea275069}</Project>
+      <Name>PATK.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\PATK.Rest\PATK.Rest.csproj">
       <Project>{ec96dec8-ebd0-4063-a697-02aac57c18c1}</Project>

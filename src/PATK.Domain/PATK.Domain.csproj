@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Azure\Subscription.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Exceptions\PublishSettingsException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

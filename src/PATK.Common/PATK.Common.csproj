@@ -49,6 +49,13 @@
       <Project>{24ac1457-3171-457e-9304-64390aadfd45}</Project>
       <Name>PATK.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PATK.Logging\PATK.Logging.csproj">
+      <Project>{544c01a9-89b8-4a8e-b85c-09d0ea275069}</Project>
+      <Name>PATK.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

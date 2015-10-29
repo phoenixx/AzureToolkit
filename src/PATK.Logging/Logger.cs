@@ -1,4 +1,5 @@
 ﻿using System;
+using PATK.Logging.Sink;
 using Serilog;
 
 namespace PATK.Logging
@@ -12,7 +13,7 @@ namespace PATK.Logging
 
         public Logger()
         {
-            _logger = new LoggerConfiguration().WriteTo.NLog().CreateLogger();
+            _logger = new LoggerConfiguration().WriteTo.NLog().MinimumLevel.Verbose().CreateLogger();
         }
 
         public void Error(string format, params object[] args)
@@ -40,16 +41,6 @@ namespace PATK.Logging
             _logger.Information(format, args);
         }
 
-        public void Trace(string message)
-        {
-            _logger.Verbose(message);
-        }
-
-        public void Trace(string format, params object[] args)
-        {
-            _logger.Verbose(format, args);
-        }
-
         public void Warning(string message)
         {
             _logger.Warning(message);
@@ -58,6 +49,16 @@ namespace PATK.Logging
         public void Warning(string format, params object[] args)
         {
             _logger.Warning(format, args);
+        }
+
+        public void Trace(string message)
+        {
+            _logger.Verbose(message);
+        }
+
+        public void Trace(string format, params object[] args)
+        {
+            _logger.Verbose(format, args);
         }
 
         public void Debug(string message)
