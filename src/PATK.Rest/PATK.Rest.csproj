@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PATK.Rest</RootNamespace>
     <AssemblyName>PATK.Rest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,13 +54,17 @@
     <Compile Include="RestConsumer\RestConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PATK.UI\PATK.Domain\PATK.Domain.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PATK.Common\PATK.Common.csproj">
+      <Project>{78d594fc-8933-4cd1-93d1-9898873a45d7}</Project>
+      <Name>PATK.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PATK.Domain\PATK.Domain.csproj">
       <Project>{24ac1457-3171-457e-9304-64390aadfd45}</Project>
       <Name>PATK.Domain</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
