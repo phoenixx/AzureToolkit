@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Exceptions\PublishSettingsException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\ApiError.cs" />
     <Compile Include="Rest\ApiErrorDetails.cs" />

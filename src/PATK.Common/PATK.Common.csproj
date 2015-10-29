@@ -42,6 +42,13 @@
   <ItemGroup>
     <Compile Include="Constants\Azure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XML\PublishSettingsReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PATK.Domain\PATK.Domain.csproj">
+      <Project>{24ac1457-3171-457e-9304-64390aadfd45}</Project>
+      <Name>PATK.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
