@@ -6,13 +6,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:r="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
         xmlns:local="clr-namespace:PATK.UI"
+        xmlns:win32="clr-namespace:Microsoft.Win32;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="Azure Toolkit" Height="350" Width="525" WindowState="Maximized">
-    <Grid>
+
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo></TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
         <Ribbon x:Name="Ribbon" SelectedIndex="0">
             <!-- Help Pane, located at the right-hand side -->
             <Ribbon.HelpPaneContent>
-                <RibbonButton SmallImageSource="../Images/help.png" />
+                <RibbonButton SmallImageSource="Images/help.png" />
             </Ribbon.HelpPaneContent>
             <!-- Quick Access Toolbar - located at the upper-left corner -->
             <Ribbon.QuickAccessToolBar>
@@ -36,6 +48,11 @@
                     <RibbonApplicationMenuItem Header="Exit" ImageSource="Images\exit.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Subscription" KeyTip="S">
+                <RibbonGroup x:Name="SubscriptionGroup" Header="Subscription">
+                    <RibbonButton LargeImageSource="Images\load.png" Label="Load" KeyTip="L" Click="SelectSubscriptionFile"></RibbonButton>
+                </RibbonGroup>
+            </RibbonTab>
             <!-- Ribbon Tab #1: Home -->
             <RibbonTab Header="Home" KeyTip="H" >
                 <!-- Home/Clipboard group-->
@@ -65,5 +82,27 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
+
+        <DockPanel Grid.Row="1" x:Name="PanelMain">
+            <Button x:Name="ButtonLoadSubscription" Click="SelectSubscriptionFile" Width="100" Height="30"></Button>
+        </DockPanel>
+        <StatusBar Grid.Row="2" Height="30">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock x:Name="Version"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Controls:MetroWindow>

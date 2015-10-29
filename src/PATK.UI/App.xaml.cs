@@ -22,6 +22,9 @@ namespace PATK.UI
             LogStartUp();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+
+            var mainWindow = _container.Resolve<MainWindow>();
+            mainWindow.Show();
         }
 
         private void LogStartUp()

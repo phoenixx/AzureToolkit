@@ -1,6 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using Microsoft.Win32;
+using PATK.Common.Certificates;
+using PATK.Common.XML;
+using PATK.Rest.RestConsumer;
 
 namespace PATK.UI
 {
@@ -9,22 +15,45 @@ namespace PATK.UI
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public MainWindow()
+        private readonly IPublishSettingsReader _publishSettingsReader;
+
+        public MainWindow(IPublishSettingsReader publishSettingsReader)
         {
+            _publishSettingsReader = publishSettingsReader;
             InitializeComponent();
-            
         }
 
-        public IEnumerable<MenuItem> MenuItems()
+        private void SelectSubscriptionFile(object sender, RoutedEventArgs e)
         {
-            var menu = new List<MenuItem>()
+            ButtonLoadSubscription.IsEnabled = false;
+
+            const string filter = "Azure Publish Settings|*.publishSettings";
+
+            var ofd = new OpenFileDialog()
             {
-                new MenuItem()
-                {
-                    Name = "Test"
-                }
+                Filter = filter,
+                Title = "Select your publish settings file"
             };
-            return menu;
-        } 
+
+            var selected = ofd.ShowDialog();
+
+            if (selected.HasValue && selected.Value)
+            {
+                var filename = ofd.FileName;
+                var fileContents = File.ReadAllBytes(filename);
+                var subscription = _publishSettingsReader.ReadPublishSettings(fileContents);
+
+                if (subscription != null)
+                {
+                    var certUtl = new CertificateUtility();
+                    var certificate = certUtl.GenerateCertificate(subscription.ManagementCertificate);
+                    var restConsumer = new RestConsumer(subscription.ServiceManagementUrl.AbsoluteUri, certificate);
+
+                    var serviceUrl = $"{subscription.Id}/services/hostedservices";
+                    var cloudServices = restConsumer.Get<string>(serviceUrl);
+                    var p = "";
+                }
+            }
+        }
     }
 }

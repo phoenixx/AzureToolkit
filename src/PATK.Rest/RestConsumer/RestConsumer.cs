@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -21,12 +22,15 @@ namespace PATK.Rest.RestConsumer
         private const string JSON_TYPE = "application/json";
         private const string STANDARD_ERROR = "An error occurred. Please check the error property.";
         private static JsonSerializerSettings _serializerSettings;
+        private readonly X509Certificate2 _certificate;
 
-        public RestConsumer()
+        public RestConsumer(string baseUrl, X509Certificate2 certificate = null)
         {
-            _version = Config.Version;
-            _token = AuthToken.GenerateAuthToken();
+            //_version = Config.Version;
+            //_token = AuthToken.GenerateAuthToken();
             _serializerSettings = new JsonSerializerSettings();
+            _certificate = certificate;
+            _baseUrl = baseUrl;
         }
 
         public async Task<ApiResponse<T>> Get<T>(string destination)
@@ -99,9 +103,13 @@ namespace PATK.Rest.RestConsumer
 
         private HttpClient CreateHttpClient(Dictionary<string, string> optionalHeaders = null)
         {
-            var httpClient = new HttpClient() { BaseAddress = new Uri(_baseUrl) };
+            var handler = new WebRequestHandler();
+            handler.ClientCertificates.Add(_certificate);
+
+            var httpClient = new HttpClient(handler) { BaseAddress = new Uri(_baseUrl) };
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("SharedAccessSignature", _token);
             httpClient = ApplyOptionalHeaders(httpClient, optionalHeaders);
+            httpClient.DefaultRequestHeaders.Add("x-ms-version", "2015-04-05");
             return httpClient;
         }
 
