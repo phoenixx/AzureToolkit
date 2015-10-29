@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using PATK.Common.Certificates;
 using PATK.Common.XML;
+using PATK.Domain;
 using PATK.Rest.RestConsumer;
 
 namespace PATK.UI
@@ -45,13 +47,16 @@ namespace PATK.UI
 
                 if (subscription != null)
                 {
-                    var certUtl = new CertificateUtility();
-                    var certificate = certUtl.GenerateCertificate(subscription.ManagementCertificate);
-                    var restConsumer = new RestConsumer(subscription.ServiceManagementUrl.AbsoluteUri, certificate);
+                    var tester = new Test();
+                    tester.TestTheThings(subscription.First());
 
-                    var serviceUrl = $"{subscription.Id}/services/hostedservices";
-                    var cloudServices = restConsumer.Get<string>(serviceUrl);
-                    var p = "";
+                    //var certUtl = new CertificateUtility();
+                    //var certificate = certUtl.GenerateCertificate(subscription.ManagementCertificate);
+                    //var restConsumer = new RestConsumer(subscription.ServiceManagementUrl.AbsoluteUri, certificate);
+
+                    //var serviceUrl = $"{subscription.Id}/services/hostedservices";
+                    //var cloudServices = restConsumer.Get<string>(serviceUrl);
+                    //var p = "";
                 }
             }
         }

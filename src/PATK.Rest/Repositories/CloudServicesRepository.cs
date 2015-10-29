@@ -4,11 +4,12 @@ namespace PATK.Rest.Repositories
 {
     public class CloudServicesRepository
     {
-        private readonly IRestConsumer _restConsumer;
+        //private readonly IRestConsumer _restConsumer;
 
-        public CloudServicesRepository(IRestConsumer restConsumer)
-        {
-            _restConsumer = restConsumer;
-        }
+        //public CloudServicesRepository(IRestConsumer restConsumer)
+        //{
+        //    _restConsumer = restConsumer;
+        //}
+
     }
 }

@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using PATK.Domain.Azure;
 
 namespace PATK.Common.XML
 {
     public interface IPublishSettingsReader
     {
-        Subscription ReadPublishSettings(byte[] publishSettingsContent);
+        IList<PublishSettings> ReadPublishSettings(byte[] publishSettingsContent);
     }
 }
