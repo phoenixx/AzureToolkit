@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATK.Common", "PATK.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATK.Domain", "PATK.Domain\PATK.Domain.csproj", "{24AC1457-3171-457E-9304-64390AADFD45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATK.Logging", "PATK.Logging\PATK.Logging.csproj", "{544C01A9-89B8-4A8E-B85C-09D0EA275069}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{24AC1457-3171-457E-9304-64390AADFD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24AC1457-3171-457E-9304-64390AADFD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AC1457-3171-457E-9304-64390AADFD45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{544C01A9-89B8-4A8E-B85C-09D0EA275069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{544C01A9-89B8-4A8E-B85C-09D0EA275069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{544C01A9-89B8-4A8E-B85C-09D0EA275069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{544C01A9-89B8-4A8E-B85C-09D0EA275069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
