@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Certificates\CertificateUtility.cs" />
     <Compile Include="Constants\Azure.cs" />
+    <Compile Include="Global\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XML\IPublishSettingsReader.cs" />
     <Compile Include="XML\PublishSettingsReader.cs" />

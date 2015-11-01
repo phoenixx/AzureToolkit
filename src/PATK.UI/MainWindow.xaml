@@ -7,9 +7,15 @@
         xmlns:r="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
         xmlns:local="clr-namespace:PATK.UI"
         xmlns:win32="clr-namespace:Microsoft.Win32;assembly=PresentationFramework"
+        xmlns:viewmodels="clr-namespace:PATK.UI.Viewmodels"
         mc:Ignorable="d"
-        Title="Azure Toolkit" Height="350" Width="525" WindowState="Maximized">
+        Title="Azure Toolkit" Height="350" Width="525" WindowState="Maximized"
+        >
 
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
+    </Window.DataContext>
+    
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo></TaskbarItemInfo>
     </Window.TaskbarItemInfo>
@@ -83,8 +89,28 @@
             </RibbonTab>
         </Ribbon>
 
-        <DockPanel Grid.Row="1" x:Name="PanelMain">
-            <Button x:Name="ButtonLoadSubscription" Click="SelectSubscriptionFile" Width="100" Height="30"></Button>
+        
+        <DockPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--menu-->
+                <ScrollViewer Grid.Column="0">
+                    <TreeView ItemsSource="{Binding CloudServices}" Margin="10">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate>
+                                <TreeViewItem Header="{Binding ServiceName}">
+                                    <ContextMenu>
+                                        <MenuItem Header="Connect using RDP"></MenuItem>
+                                    </ContextMenu>
+                                </TreeViewItem>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </ScrollViewer>
+            </Grid>
         </DockPanel>
         <StatusBar Grid.Row="2" Height="30">
             <StatusBar.ItemsPanel>

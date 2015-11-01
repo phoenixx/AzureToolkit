@@ -122,7 +122,6 @@
     <Compile Include="Rest\ApiErrorDetails.cs" />
     <Compile Include="Rest\ApiErrorMessage.cs" />
     <Compile Include="Rest\ApiResponse.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
