@@ -5,6 +5,7 @@ using PATK.Common.XML;
 using PATK.Logging;
 using PATK.Rest.Repositories;
 using PATK.Rest.RestConsumer;
+using PATK.UI.Controls;
 
 namespace PATK.UI.DI
 {
@@ -16,6 +17,7 @@ namespace PATK.UI.DI
             container.Register(Component.For<IPublishSettingsReader>().ImplementedBy<PublishSettingsReader>().LifestyleSingleton());
             container.Register(Component.For<ILogger>().ImplementedBy<Logger>().LifestyleSingleton());
             container.Register(Component.For<MainWindow>().LifestyleTransient());
+            container.Register(Component.For<Home>().LifestyleTransient());
             container.Register(Component.For<ICloudServicesRepository>().ImplementedBy<CloudServicesRepository>());
         }
     }

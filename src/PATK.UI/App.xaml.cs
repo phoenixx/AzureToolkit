@@ -19,6 +19,8 @@ namespace PATK.UI
 
             _logger = _container.Resolve<ILogger>();
 
+            Container.InitializeContainerWith(_container);
+
             LogStartUp();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;

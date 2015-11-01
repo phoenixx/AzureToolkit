@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="PATK.UI.Controls.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PATK.UI.Controls"
+             xmlns:viewmodels="clr-namespace:PATK.UI.Viewmodels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <viewmodels:ServicesViewModel></viewmodels:ServicesViewModel>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Button x:Name="btnLoadSubscription"
+                    
+                    MinWidth="150"
+                    MaxWidth="200"
+                    Margin="10"
+                    Click="LoadSubscription_OnClick"
+                    >
+                <TextBlock>
+                    Load subscription
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="200" MaxWidth="300"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Grid.Column="0">
+                <TreeView ItemsSource="{Binding CloudServices}" Margin="10">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate>
+                            <TreeViewItem Header="{Binding ServiceName}">
+                            </TreeViewItem>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</UserControl>

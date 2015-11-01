@@ -4,10 +4,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:r="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
-        xmlns:local="clr-namespace:PATK.UI"
-        xmlns:win32="clr-namespace:Microsoft.Win32;assembly=PresentationFramework"
+        xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        WindowTransitionsEnabled="False"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"					  
+        GlowBrush="{DynamicResource AccentColorBrush}"					  
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         xmlns:viewmodels="clr-namespace:PATK.UI.Viewmodels"
+        xmlns:domain="clr-namespace:PATK.Domain;assembly=PATK.Domain"
+        xmlns:controls="clr-namespace:PATK.UI.Controls"
         mc:Ignorable="d"
         Title="Azure Toolkit" Height="350" Width="525" WindowState="Maximized"
         >
@@ -20,75 +25,57 @@
         <TaskbarItemInfo></TaskbarItemInfo>
     </Window.TaskbarItemInfo>
 
-    <Grid x:Name="LayoutRoot">
+    <wpf:DialogHost Identifier="RootDialog">
+        <wpf:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <wpf:DrawerHost.LeftDrawerContent>
+                <StackPanel Orientation="Vertical">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                  HorizontalAlignment="Right" Margin="16"
+                                  IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="domain:MenuItem">
+                                <TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <domain:MenuItem Name="Home">
+                            <domain:MenuItem.Content>
+                                <controls:Home />
+                            </domain:MenuItem.Content>
+                        </domain:MenuItem>
+                    </ListBox>
+                </StackPanel>
+            </wpf:DrawerHost.LeftDrawerContent>
+            <DockPanel>
+                <wpf:ColorZone Padding="16" wpf:ShadowAssist.ShadowDepth="Depth2"
+                               Mode="PrimaryMid" DockPanel.Dock="Top">
+                    <DockPanel>
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                      x:Name="MenuToggleButton"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">
+                            Azure Toolkit
+                        </TextBlock>
+                    </DockPanel>
+                </wpf:ColorZone>
+                <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+            </DockPanel>
+        </wpf:DrawerHost>
+    </wpf:DialogHost>
+
+    <!--<Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <Ribbon x:Name="Ribbon" SelectedIndex="0">
-            <!-- Help Pane, located at the right-hand side -->
-            <Ribbon.HelpPaneContent>
-                <RibbonButton SmallImageSource="Images/help.png" />
-            </Ribbon.HelpPaneContent>
-            <!-- Quick Access Toolbar - located at the upper-left corner -->
-            <Ribbon.QuickAccessToolBar>
-                <RibbonQuickAccessToolBar>
-                    <RibbonButton x:Name ="Save" SmallImageSource="Images\save.png" />
-                    <RibbonSplitButton x:Name ="Undo" SmallImageSource="Images\undo.png" >
-                        <RibbonSplitMenuItem Header="Undo action #1" />
-                        <RibbonSplitMenuItem Header="Undo action #2" />
-                        <RibbonSplitMenuItem Header="Undo action #3" />
-                    </RibbonSplitButton>
-                    <RibbonSplitButton x:Name="Redo" SmallImageSource="Images/redo.png" >
-                        <RibbonSplitMenuItem Header="Redo action #1" />
-                        <RibbonSplitMenuItem Header="Redo action #2" />
-                    </RibbonSplitButton>
-                </RibbonQuickAccessToolBar>
-            </Ribbon.QuickAccessToolBar>
-            <!-- Application Menu, located at the left-hand side (down arrow) -->
-            <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu KeyTip="F">
-                    <RibbonApplicationMenuItem Header="Options" ImageSource="Images\options.png" />
-                    <RibbonApplicationMenuItem Header="Exit" ImageSource="Images\exit.png" />
-                </RibbonApplicationMenu>
-            </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Subscription" KeyTip="S">
-                <RibbonGroup x:Name="SubscriptionGroup" Header="Subscription">
-                    <RibbonButton LargeImageSource="Images\load.png" Label="Load" KeyTip="L" Click="SelectSubscriptionFile"></RibbonButton>
-                </RibbonGroup>
-            </RibbonTab>
-            <!-- Ribbon Tab #1: Home -->
-            <RibbonTab Header="Home" KeyTip="H" >
-                <!-- Home/Clipboard group-->
-                <RibbonGroup x:Name="ClipboardGroup" Header="Clipboard">
-                    <RibbonMenuButton LargeImageSource="Images\paste.png" Label="Paste" KeyTip="V">
-                        <RibbonMenuItem ImageSource="Images\paste.png" Header="Keep Text Only" KeyTip="T"/>
-                        <RibbonMenuItem ImageSource="Images\paste.png" Header="Paste Special..." KeyTip="S"/>
-                    </RibbonMenuButton>
-                    <RibbonButton SmallImageSource="Images\cut.png" Label="Cut" KeyTip="X" />
-                    <RibbonButton SmallImageSource="Images\copy.png" Label="Copy" KeyTip="C" />
-                    <RibbonButton SmallImageSource="Images\format_painter.png" Label="Format Painter" KeyTip="FP" />
-                </RibbonGroup>
-                <!-- Home/Colors group-->
-                <RibbonGroup x:Name="Color" Header="Colors">
-                    <RibbonRadioButton Label="Red" KeyTip="R" IsChecked="True"/>
-                    <RibbonRadioButton Label="Green" KeyTip="G"/>
-                    <RibbonRadioButton Label="Blue" KeyTip="B"/>
-                </RibbonGroup>
-            </RibbonTab>
-            <!-- Ribbon Tab #2: Launch -->
-            <RibbonTab Header="Launch" KeyTip="L">
-                <!-- Launch/Applications group-->
-                <RibbonGroup x:Name="DesktopApplication" Header="Desktop Applications">
-                </RibbonGroup>
-                <!-- Launch/Games group-->
-                <RibbonGroup x:Name="App" Header="Apps">
-                </RibbonGroup>
-            </RibbonTab>
-        </Ribbon>
-
+        <DockPanel Grid.Row="0" Dock="Left">
+            <Button Click="SelectSubscriptionFile" x:Name="btnLoadSubscription" Margin="10" Padding="5" MaxWidth="150">
+                <TextBlock>
+                    Load subscription
+                </TextBlock>
+            </Button>
+        </DockPanel>
         
         <DockPanel Grid.Row="1">
             <Grid>
@@ -96,15 +83,12 @@
                     <ColumnDefinition Width="200"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <!--menu-->
+                --><!--menu--><!--
                 <ScrollViewer Grid.Column="0">
                     <TreeView ItemsSource="{Binding CloudServices}" Margin="10">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate>
                                 <TreeViewItem Header="{Binding ServiceName}">
-                                    <ContextMenu>
-                                        <MenuItem Header="Connect using RDP"></MenuItem>
-                                    </ContextMenu>
                                 </TreeViewItem>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
@@ -130,5 +114,5 @@
                 <TextBlock x:Name="Version"></TextBlock>
             </StatusBarItem>
         </StatusBar>
-    </Grid>
+    </Grid>-->
 </Controls:MetroWindow>
