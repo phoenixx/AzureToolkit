@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
@@ -19,6 +20,18 @@ namespace PATK.Rest.Repositories
             GetManagementClient();
             var hostedServices = await _managementClient.HostedServices.ListAsync();
             return hostedServices;
+        }
+
+        public async Task<byte[]> GetRdpFile(string serviceName)
+        {
+            GetManagementClient();
+
+            var service = await _managementClient.HostedServices.GetDetailedAsync(serviceName);
+            var firstDeployment = service.Deployments.First();
+            var machineName = firstDeployment.RoleInstances.First().HostName;
+
+            var rdp = await _managementClient.VirtualMachines.GetRemoteDesktopFileAsync(serviceName, firstDeployment.Name, machineName);
+            return rdp.RemoteDesktopFile;
         }
 
         private void GetManagementClient()

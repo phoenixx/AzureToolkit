@@ -72,7 +72,7 @@
                 <TextBlock 
                     Text="{Binding ElementName=AvailableServices, Path=SelectedItem.ServiceName}"
                     FontSize="{StaticResource HeaderFontSize}"></TextBlock>
-                <Button Click="GetRdpFile" Tag="{Binding ElementName=AvailableServices, Path=SelectedItem}">
+                <Button Click="GetRdpFile" CommandParameter="{Binding ElementName=AvailableServices, Path=SelectedItem.ServiceName}">
                     <TextBlock Text="Get RDP File"></TextBlock>
                 </Button>
             </StackPanel>

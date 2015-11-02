@@ -20,9 +20,11 @@ namespace PATK.UI.Controls
     public partial class Home : UserControl
     {
         private ServicesViewModel _viewModel;
+        private readonly ICloudServicesRepository _cloudServicesRepository;
 
         public Home()
         {
+            _cloudServicesRepository = Container.Get<ICloudServicesRepository>();
             _viewModel = new ServicesViewModel();
             DataContext = _viewModel;
             InitializeComponent();
@@ -33,8 +35,9 @@ namespace PATK.UI.Controls
             var button = sender as Button;
             if (button != null)
             {
-                var service = ((HostedServiceListResponse.HostedService)button.DataContext);
-                var t = service.ComputeCapabilities.VirtualMachinesRoleSizes;
+                var service = button.CommandParameter.ToString();
+                //var service = ((string)button.DataContext);
+                var t = _cloudServicesRepository.GetRdpFile(service);
             }
         }
     }

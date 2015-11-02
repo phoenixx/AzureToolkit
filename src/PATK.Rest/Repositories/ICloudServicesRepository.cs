@@ -6,5 +6,6 @@ namespace PATK.Rest.Repositories
     public interface ICloudServicesRepository
     {
         Task<HostedServiceListResponse> GetCloudServices();
+        Task<byte[]> GetRdpFile(string serviceName);
     }
 }
