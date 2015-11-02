@@ -16,16 +16,24 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="btnLoadSubscription"
-                    
+                    Command="{Binding LoadSubscriptionCommand}"
+                    MinWidth="150"
+                    MaxWidth="200"
+                    Margin="10">
+                <TextBlock>
+                    Load subscription
+                </TextBlock>
+            </Button>
+            <Button x:Name="btnClearSubscription"
+                    Command="{Binding ClearSubscriptionCommand}"
                     MinWidth="150"
                     MaxWidth="200"
                     Margin="10"
-                    Click="LoadSubscription_OnClick"
-                    >
+                    IsEnabled="{Binding SubscriptionLoaded}">
                 <TextBlock>
-                    Load subscription
+                    Clear subscription
                 </TextBlock>
             </Button>
         </StackPanel>
@@ -34,22 +42,41 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="200" MaxWidth="300"></ColumnDefinition>
+                <ColumnDefinition MinWidth="300" MaxWidth="500"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0">
-                <TreeView ItemsSource="{Binding CloudServices}" Margin="10">
+                <TreeView ItemsSource="{Binding CloudServices}" Margin="10" x:Name="AvailableServices">
+                    <TreeView.Resources>
+                        <ContextMenu x:Key="ContextMenuServices">
+                            <MenuItem Header="List services"></MenuItem>
+                        </ContextMenu>
+                    </TreeView.Resources>
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate>
-                            <TreeViewItem Header="{Binding ServiceName}">
-                            </TreeViewItem>
+                            <TextBlock Text="{Binding ServiceName}">
+                                <TextBlock.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Connect RDP"></MenuItem>
+                                    </ContextMenu>
+                                </TextBlock.ContextMenu>
+                            </TextBlock>
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
                 </TreeView>
             </ScrollViewer>
 
+            <StackPanel Grid.Column="1" Margin="20">
+                <TextBlock 
+                    Text="{Binding ElementName=AvailableServices, Path=SelectedItem.ServiceName}"
+                    FontSize="{StaticResource HeaderFontSize}"></TextBlock>
+                <Button Click="GetRdpFile" Tag="{Binding ElementName=AvailableServices, Path=SelectedItem}">
+                    <TextBlock Text="Get RDP File"></TextBlock>
+                </Button>
+            </StackPanel>
+           
         </Grid>
     </Grid>
 </UserControl>
